@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "../styles/catalog.css";
 import RentedMovies from "./RentedMovies";
 
@@ -33,7 +34,9 @@ export default class Catalog extends Component {
           <div className="catalog">
             {this.props.movies.map((movie) => (
               <div key={movie.id} className="movie">
-                <img className="movie-img" src={movie.img} />
+                <Link to={`/catalog/${movie.id}`}>
+                  <img className="movie-img" src={movie.img} />
+                </Link>
                 <button onClick={() => this.props.handleRent(movie.id, true)}>
                   rent
                 </button>

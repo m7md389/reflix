@@ -3,6 +3,7 @@ import { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Landing from "./components/Landing";
 import Catalog from "./components/Catalog";
+import MovieDetail from "./components/MovieDetail";
 
 class App extends Component {
   constructor() {
@@ -90,14 +91,18 @@ class App extends Component {
                 <Catalog
                   movies={this.state.movies}
                   handleRent={this.handleRent}
-                ></Catalog>
+                />
               )}
             />
-            <Route exact path="/catalog/:movie_id" render={() => null} />
+            <Route
+              exact
+              path="/catalog/:movieId"
+              render={({ match }) => (
+                <MovieDetail match={match} movies={this.state.movies} />
+              )}
+            />
           </div>
         </Router>
-
-        <div className="App"></div>
       </Fragment>
     );
   }
