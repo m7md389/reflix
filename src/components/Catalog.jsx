@@ -1,18 +1,33 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "../styles/catalog.css";
+import AllMovies from "./AllMovies";
 import RentedMovies from "./RentedMovies";
 
 export default class Catalog extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      inputValue: "",
+      searchInput: "",
+      movies: [...props.movies],
     };
   }
 
   handleInput = (event) => {
-    this.setState({ inputValue: event.target.value });
+    this.setState({ searchInput: event.target.value }, () => {
+      let movies = [...this.props.movies];
+      const { searchInput } = this.state;
+
+      if (searchInput.replace(/ /g, "").length == 0) {
+        this.setState({ movies: this.props.movies });
+        return null;
+      }
+
+      movies = movies.filter((m) =>
+        m.title.toLowerCase().startsWith(searchInput)
+      );
+
+      this.setState({ movies });
+    });
   };
 
   render() {
@@ -21,29 +36,10 @@ export default class Catalog extends Component {
         <input
           type="text"
           onChange={(event) => this.handleInput(event)}
-          value={this.state.inputValue}
+          value={this.state.searchInput}
         />
-
-        <RentedMovies
-          movies={this.props.movies}
-          handleRent={this.props.handleRent}
-        />
-
-        <div className="catalog-container">
-          <h1>Catalog:</h1>
-          <div className="catalog">
-            {this.props.movies.map((movie) => (
-              <div key={movie.id} className="movie">
-                <Link to={`/catalog/${movie.id}`}>
-                  <img className="movie-img" src={movie.img} />
-                </Link>
-                <button onClick={() => this.props.handleRent(movie.id, true)}>
-                  rent
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+        <RentedMovies movies={this.state.movies} onRent={this.props.onRent} />
+        <AllMovies movies={this.state.movies} onRent={this.props.onRent} />
       </div>
     );
   }

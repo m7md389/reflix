@@ -88,10 +88,7 @@ class App extends Component {
               exact
               path="/catalog"
               render={() => (
-                <Catalog
-                  movies={this.state.movies}
-                  handleRent={this.handleRent}
-                />
+                <Catalog movies={this.state.movies} onRent={this.handleRent} />
               )}
             />
             <Route
