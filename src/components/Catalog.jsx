@@ -6,9 +6,11 @@ import RentedMovies from "./RentedMovies";
 export default class Catalog extends Component {
   constructor(props) {
     super(props);
+    this.INITIAL_BUDGET = 10;
     this.state = {
       searchInput: "",
       movies: [...props.movies],
+      budget: this.INITIAL_BUDGET,
     };
   }
 
@@ -30,6 +32,18 @@ export default class Catalog extends Component {
     });
   };
 
+  handleRent = (movieId, isRented) => {
+    let budget = this.state.budget;
+
+    if (budget < 3 && isRented) return null;
+
+    this.props.onRent(movieId, isRented);
+    if (isRented) budget -= 3;
+    else budget += 3;
+
+    this.setState({ budget });
+  };
+
   render() {
     return (
       <div className="catalog-page">
@@ -38,8 +52,9 @@ export default class Catalog extends Component {
           onChange={(event) => this.handleInput(event)}
           value={this.state.searchInput}
         />
-        <RentedMovies movies={this.state.movies} onRent={this.props.onRent} />
-        <AllMovies movies={this.state.movies} onRent={this.props.onRent} />
+        <h1 className="buget">Budget: {this.state.budget}</h1>
+        <RentedMovies movies={this.state.movies} onRent={this.handleRent} />
+        <AllMovies movies={this.state.movies} onRent={this.handleRent} />
       </div>
     );
   }

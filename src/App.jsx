@@ -57,10 +57,10 @@ class App extends Component {
         },
       ],
       users: [
-        { id: 0, budget: 50000, name: "Mohammad", color: "#008B8B" },
-        { id: 1, budget: 123456789, name: "Shokre", color: "#ffa0a0" },
-        { id: 2, budget: 15000, name: "Ameer", color: "#4a98fc" },
-        { id: 3, budget: 999, name: "Fadi", color: "#cacaca" },
+        { id: 0, budget: 100, name: "Mohammad", color: "#008B8B" },
+        { id: 1, budget: 3, name: "Shokre", color: "#ffa0a0" },
+        { id: 2, budget: 58, name: "Ameer", color: "#4a98fc" },
+        { id: 3, budget: 9, name: "Fadi", color: "#cacaca" },
       ],
     };
   }
